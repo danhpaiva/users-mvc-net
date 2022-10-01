@@ -36,5 +36,58 @@ namespace UsersMvcNet6.Controllers
       }
       else return View(contact);
     }
+
+    [HttpGet]
+    public IActionResult Editar(int id)
+    {
+      var contact = _context.Contacts.Find(id);
+      if (contact == null) return RedirectToAction(nameof(Index));
+
+      return View(contact);
+    }
+
+    [HttpPost]
+    public IActionResult Editar(Contact contact)
+    {
+      var contactDataBase = _context.Contacts.Find(contact.Id);
+
+      contactDataBase.Name = contact.Name;
+      contactDataBase.Phone = contact.Phone;
+      contactDataBase.Active = contact.Active;
+
+      _context.Contacts.Update(contactDataBase);
+      _context.SaveChanges();
+
+      return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Detalhes(int id)
+    {
+      var contactDataBase = _context.Contacts.Find(id);
+
+      if (contactDataBase == null) return RedirectToAction(nameof(Index));
+
+      return View(contactDataBase);
+    }
+
+    public IActionResult Deletar(int id)
+    {
+      var contactDataBase = _context.Contacts.Find(id);
+
+      if (contactDataBase == null) return RedirectToAction(nameof(Index));
+
+      return View(contactDataBase);
+    }
+
+    [HttpPost]
+    public IActionResult Deletar(Contact contact)
+    {
+      var contactDataBase = _context.Contacts.Find(contact.Id);
+
+      _context.Remove(contactDataBase);
+      _context.SaveChanges();
+
+      return RedirectToAction(nameof(Index));
+    }
   }
 }
