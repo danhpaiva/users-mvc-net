@@ -36,5 +36,14 @@ namespace UsersMvcNet6.Controllers
       }
       else return View(contact);
     }
+
+    [HttpGet]
+    public IActionResult Editar(int id)
+    {
+      var contact = _context.Contacts.Find(id);
+      if (contact == null) return RedirectToAction(nameof(Index));
+
+      return View(contact);
+    }
   }
 }
