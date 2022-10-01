@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using UsersMvcNet6.Context;
+using UsersMvcNet6.Models;
 
 namespace UsersMvcNet6.Controllers
 {
@@ -18,9 +19,22 @@ namespace UsersMvcNet6.Controllers
       return View(contacts);
     }
 
+    [HttpGet]
     public IActionResult Criar()
     {
       return View();
+    }
+
+    [HttpPost]
+    public IActionResult Criar(Contact contact)
+    {
+      if (ModelState.IsValid)
+      {
+        _context.Contacts.Add(contact);
+        _context.SaveChanges();
+        return RedirectToAction(nameof(Index));
+      }
+      else return View(contact);
     }
   }
 }
