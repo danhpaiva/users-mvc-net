@@ -45,5 +45,20 @@ namespace UsersMvcNet6.Controllers
 
       return View(contact);
     }
+
+    [HttpPost]
+    public IActionResult Editar(Contact contact)
+    {
+      var contactDataBase = _context.Contacts.Find(contact.Id);
+
+      contactDataBase.Name = contact.Name;
+      contactDataBase.Phone = contact.Phone;
+      contactDataBase.Active = contact.Active;
+
+      _context.Contacts.Update(contactDataBase);
+      _context.SaveChanges();
+
+      return RedirectToAction(nameof(Index));
+    }
   }
 }
