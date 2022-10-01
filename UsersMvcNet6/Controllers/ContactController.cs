@@ -17,5 +17,10 @@ namespace UsersMvcNet6.Controllers
       var contacts = _context.Contacts.ToList();
       return View(contacts);
     }
+
+    public IActionResult Criar()
+    {
+      return View();
+    }
   }
 }
